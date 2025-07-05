@@ -1,3 +1,4 @@
+from count import count
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -12,22 +13,18 @@ class BasePage:
 
     # locators
 
-    def locator_maker(self,xpath,index=None):
-        """
-        to avoid code repeats when creating xpath locators
-        """
-        if index is not None:
-            return ("xpath",f"{xpath}[{index}]")
-        return ("xpath", xpath)
-
     search_input_button = "//div[@class='w-50']"
     user_options = "//ul[@class='navbar-nav flex-row justify-content-xl-end d-flex flex-wrap text-body py-0 navbar-right']/li"
     navbar_links = "//ul[@class='navbar-nav hover-menu main-menu px-0 mx-xl-n5']/li"
+    bestsellers = "//div[@class='slick-track']/div"
+    off_canvas_block = "//div[@class='canvas-sidebar cart-canvas show']"
+    close_off_canvas = "//span[@class='canvas-close d-inline-block fs-24 mb-1 ml-auto lh-1 text-primary']"
 
     # getters
 
     def get_search_input_button(self):
         return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.search_input_button,1)))
+
 
     def get_personal_account_button(self):
         return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.user_options,1)))
@@ -39,6 +36,14 @@ class BasePage:
 
     def get_cart_button(self):
         return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.user_options,3)))
+
+
+    def get_off_canvas_block(self):
+        return self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.off_canvas_block)))
+
+
+    def get_close_off_canvas(self):
+        return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.close_off_canvas)))
 
 
     # actions
@@ -57,6 +62,17 @@ class BasePage:
 
     def click_cart_button(self):
         self.get_cart_button().click()
+
+
+    # methods
+
+    def locator_maker(self,xpath,index=None):
+        """
+        to avoid code repeats when creating xpath locators
+        """
+        if index is not None:
+            return ("xpath",f"{xpath}[{index}]")
+        return ("xpath", xpath)
 
 
     def open(self):
