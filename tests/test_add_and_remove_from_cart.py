@@ -1,11 +1,18 @@
 import time
 
-from base. base_test import BaseTest
+from base.base_test import BaseTest
 
 
 class TestAddToCart(BaseTest):
 
     def test_open(self):
         self.mainPage.open()
-
+        self.mainPage.click_accept_cookie()
+        self.mainPage.click_search_input_button()
+        self.mainPage.enter_text("крем")
+        self.searchResultPage.scroll(0, 300)
+        self.searchResultPage.hover_item()
+        self.searchResultPage.click_add_to_cart_button()
+        self.searchResultPage.get_off_canvas_block()
+        self.searchResultPage.click_close_off_canvas_button()
         time.sleep(3)
