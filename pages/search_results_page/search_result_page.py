@@ -3,6 +3,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
+from count import several_things_count
+
 class SearchResultPage(BasePage):
 
     page_url = "https://milamoursi.ru/search/"
@@ -10,7 +12,7 @@ class SearchResultPage(BasePage):
     # locators
 
     item_locator = "//div[@class='col-xl-3 col-lg-4 col-6']"
-    add_to_cart_button_locator = "//a[@class='btn btn-secondary lh-12']"
+    add_to_cart_button_locator = "(//a[@class='btn btn-secondary lh-12'])"
 
     # getters
 
@@ -35,3 +37,24 @@ class SearchResultPage(BasePage):
 
     def click_add_to_cart_button(self):
         self.get_add_to_cart_button().click()
+
+
+    # methods
+
+    def add_several_items(self):
+        """
+        метод для добавления в корзину нескольких товаров
+        веб-элементы задаются в этом методе отдельно от геттеров
+        и перебираются через цикл for в диапазоне числа из several_things_count
+        некоторые локаторы на сайте дублируются независимо от локатора родительского элемента
+        (индекс 1,2 для десктоп-версии, 3,4 - для мобильной версии и тд)
+        поэтому создана переменная n, которая с каждой итерацией увеличивается на 2, чтобы нажать соответствующую кнопку
+        """
+        n = 1
+        for i in range(1, several_things_count):
+            (self.action.move_to_element(
+                self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.item_locator, i)))
+            ).perform())
+            self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.add_to_cart_button_locator, n))).click()
+            self.click_close_off_canvas_button()
+            n += 2
