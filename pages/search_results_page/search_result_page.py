@@ -1,3 +1,4 @@
+from database.database import Database
 from pages.base_page.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -13,6 +14,8 @@ class SearchResultPage(BasePage):
 
     item_locator = "//div[@class='col-xl-3 col-lg-4 col-6']"
     add_to_cart_button_locator = "(//a[@class='btn btn-secondary lh-12'])"
+    item_name_locator = "(//h2[@class='card-title fs-15 font-weight-500 mb-2'])"
+    item_price_locator = "//*[@id='catalog']/div/div"
 
     # getters
 
@@ -29,6 +32,12 @@ class SearchResultPage(BasePage):
         для кейсов с покупкой нескольких товаров локаторы будут перебираться через цикл
         """
         return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.add_to_cart_button_locator,1)))
+
+    def get_item_name(self):
+        return self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_name_locator,1)))
+
+    def get_item_price(self):
+        return self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_price_locator,1)))
 
     # actions
 
@@ -52,9 +61,16 @@ class SearchResultPage(BasePage):
         """
         n = 1
         for i in range(1, several_things_count):
-            (self.action.move_to_element(
-                self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.item_locator, i)))
-            ).perform())
-            self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.add_to_cart_button_locator, n))).click()
+            item = self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.item_locator, i)))
+            add_button = EC.element_to_be_clickable(self.locator_maker(self.add_to_cart_button_locator, n))
+            item_name = self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_name_locator,n)))
+            item_price = self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_price_locator,n,"/div/div[2]/p/span[2]")))
+
+            get_price = self.divide_price(item_price.text,True)
+
+            self.action.move_to_element(item).perform()
+            self.wait.until(add_button).click()
             self.click_close_off_canvas_button()
+            #Database.update_data(item_name.text, get_price)
+            print(item_name.text, get_price)
             n += 2

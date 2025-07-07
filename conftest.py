@@ -1,7 +1,7 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
+import os
 from database.database import Database
 
 @pytest.fixture(autouse=True)
@@ -14,6 +14,4 @@ def driver(request):
     driver.quit()
 
 
-@pytest.fixture(autouse=True)
-def create_database():
-    Database.create_db()
+#

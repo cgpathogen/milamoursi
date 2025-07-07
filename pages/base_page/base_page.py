@@ -78,17 +78,32 @@ class BasePage:
 
     # methods
 
-    def locator_maker(self,xpath,index=None):
+    def locator_maker(self, xpath, index=None, option=None):
         """
         универсальный метод во избежание дублирования кода
         """
         if index is not None:
             return ("xpath",f"{xpath}[{index}]")
+        if option is not None:
+            return ("xpath", f"{xpath}[{index}]{option}")
         return ("xpath", xpath)
 
 
     def scroll(self,up, down):
         self.driver.execute_script(f"window.scrollBy({up}, {down});")
+
+
+    def divide_price(self, price, old_price=False):
+        """
+        Метод для получения цены товара
+        локатор в вёрстке не позволяет получить актуальную цену отдельно от старой цены, поэтому при её наличии
+        срабатывает метод на отсечение старой цены
+        Если старая цена отсутствует в блоке, то метод получает только актуальную цену
+        """
+        if old_price:
+            return int(price.split("₽")[1].replace(" ", ""))
+        else:
+            return int(price.split("₽")[0].replace(" ", ""))
 
 
     def open(self):
