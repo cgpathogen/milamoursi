@@ -3,8 +3,7 @@ import os
 
 class Database:
 
-    db_path = os.path.join(os.path.dirname(__file__), "main.db")
-    db_name = "main.db"
+    db_path = ":memory:"
     table_name = "products"
 
     @staticmethod
