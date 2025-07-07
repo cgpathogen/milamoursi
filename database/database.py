@@ -2,8 +2,7 @@ import sqlite3
 import os
 
 class Database:
-    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(CURRENT_DIR, "main.db")
+    db_path = os.path.join(os.path.dirname(__file__), "main.db")
     table_name = "products"
 
     @staticmethod

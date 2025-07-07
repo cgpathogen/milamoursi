@@ -71,6 +71,6 @@ class SearchResultPage(BasePage):
             self.action.move_to_element(item).perform()
             self.wait.until(add_button).click()
             self.click_close_off_canvas_button()
-            #Database.update_data(item_name.text, get_price)
-            print(item_name.text, get_price)
+            Database.update_data(item_name.text, get_price)
+            #print(item_name.text, get_price)
             n += 2
