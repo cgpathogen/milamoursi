@@ -15,7 +15,7 @@ def driver(request):
 
 
 @pytest.fixture(autouse=True)
-def prepare_database():
+def create_database():
     if os.path.exists(Database.db_path):
         os.remove(Database.db_path)
     Database.create_db()
