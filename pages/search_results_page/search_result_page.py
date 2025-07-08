@@ -1,8 +1,6 @@
 from database.database import Database
 from pages.base_page.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
 
 from count import several_things_count
 
@@ -61,15 +59,16 @@ class SearchResultPage(BasePage):
         """
         n = 1
         for i in range(1, several_things_count):
+            # inner locators
             item = self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.item_locator, i)))
             add_button = EC.element_to_be_clickable(self.locator_maker(self.add_to_cart_button_locator, n))
             item_name = self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_name_locator,i)))
             item_price = self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_price_locator,i,"/div/div[2]/p/span[2]")))
-
+            # get price
             get_price = self.divide_price(item_price.text,True)
-
+            # main algorythm
             self.action.move_to_element(item).perform()
             self.wait.until(add_button).click()
             self.click_close_off_canvas_button()
-            Database.update_data(item_name.text, get_price) # добавляем данные в бд
+            Database.update_data(item_name.text, get_price)
             n += 2
