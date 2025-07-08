@@ -22,6 +22,7 @@ class BasePage:
     add_to_cart_btn = "//a[@class='btn btn-secondary lh-12']"
     off_canvas_block = "//div[@class='canvas-sidebar cart-canvas show']"
     close_off_canvas = "//span[@class='canvas-close d-inline-block fs-24 mb-1 ml-auto lh-1 text-primary']"
+    off_canvas_go_to_cart_locator = "//a[@class='btn btn-secondary btn-block mb-3']"
 
 
 
@@ -51,6 +52,9 @@ class BasePage:
     def get_close_off_canvas(self):
         return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.close_off_canvas)))
 
+    def get_off_canvas_go_to_cart_locator(self):
+        return  self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.off_canvas_go_to_cart_locator)))
+
     # actions
 
     def click_accept_cookie(self):
@@ -74,6 +78,9 @@ class BasePage:
 
     def click_close_off_canvas_button(self):
         self.get_close_off_canvas().click()
+
+    def click_off_canvas_go_to_cart(self):
+        self.get_off_canvas_go_to_cart_locator().click()
 
 
     # methods

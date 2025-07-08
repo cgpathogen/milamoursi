@@ -60,12 +60,11 @@ class SearchResultPage(BasePage):
         поэтому создана переменная n, которая с каждой итерацией увеличивается на 2, чтобы нажать соответствующую кнопку
         """
         n = 1
-        sum = 0
         for i in range(1, several_things_count):
             item = self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.item_locator, i)))
             add_button = EC.element_to_be_clickable(self.locator_maker(self.add_to_cart_button_locator, n))
-            item_name = self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_name_locator,n)))
-            item_price = self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_price_locator,n,"/div/div[2]/p/span[2]")))
+            item_name = self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_name_locator,i)))
+            item_price = self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.item_price_locator,i,"/div/div[2]/p/span[2]")))
 
             get_price = self.divide_price(item_price.text,True)
 
@@ -74,4 +73,3 @@ class SearchResultPage(BasePage):
             self.click_close_off_canvas_button()
             Database.update_data(item_name.text, get_price) # добавляем данные в бд
             n += 2
-            sum += get_price
