@@ -2,7 +2,7 @@ from database.database import Database
 from pages.base_page.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
 
-from count import several_things_count
+from count import count
 
 class SearchResultPage(BasePage):
 
@@ -52,13 +52,13 @@ class SearchResultPage(BasePage):
         """
         метод для добавления в корзину нескольких товаров
         веб-элементы задаются в этом методе отдельно от геттеров
-        и перебираются через цикл for в диапазоне числа из several_things_count
+        и перебираются через цикл for в диапазоне числа из count
         некоторые локаторы на сайте дублируются независимо от локатора родительского элемента
         (индекс 1,2 для десктоп-версии, 3,4 - для мобильной версии и тд)
         поэтому создана переменная n, которая с каждой итерацией увеличивается на 2, чтобы нажать соответствующую кнопку
         """
         n = 1
-        for i in range(1, several_things_count):
+        for i in range(1, count):
             # inner locators
             item = self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.item_locator, i)))
             add_button = EC.element_to_be_clickable(self.locator_maker(self.add_to_cart_button_locator, n))

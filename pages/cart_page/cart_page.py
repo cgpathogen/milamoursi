@@ -1,7 +1,7 @@
 from pages.base_page.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
 
-from count import several_things_count
+from count import count
 
 class CartPage(BasePage):
 
@@ -32,7 +32,7 @@ class CartPage(BasePage):
     # methods
 
     def remove_from_cart_(self):
-        for i in range(1, several_things_count):
+        for i in range(1, count):
             # внутренний геттер для перебора кнопок по индексу
             getter_cross_button = self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.cross_button_locator,i)))
             getter_cross_button.click()

@@ -1,1 +1,1 @@
-several_things_count = 3
+count = 3
