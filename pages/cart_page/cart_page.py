@@ -1,6 +1,6 @@
 from pages.base_page.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
-
+import allure
 from count import count
 
 class CartPage(BasePage):
@@ -26,11 +26,13 @@ class CartPage(BasePage):
 
     # actions
 
+    @allure.step("Waiting for message the cart is empty")
     def wait_for_message(self):
         assert self.get_empty().text == "Ваша корзина пуста"
 
     # methods
 
+    @allure.step("Removal items from cart")
     def remove_from_cart_(self):
         for i in range(1, count):
             # внутренний геттер для перебора кнопок по индексу

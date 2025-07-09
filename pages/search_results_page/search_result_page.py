@@ -1,7 +1,7 @@
+import allure
 from database.database import Database
 from pages.base_page.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
-
 from count import count
 
 class SearchResultPage(BasePage):
@@ -39,15 +39,17 @@ class SearchResultPage(BasePage):
 
     # actions
 
+    @allure.step("Hover item")
     def hover_item(self):
         self.action.move_to_element(self.get_item()).perform()
 
+    @allure.step("Click add to cart button")
     def click_add_to_cart_button(self):
         self.get_add_to_cart_button().click()
 
 
     # methods
-
+    @allure.step("Adding item to cart")
     def add_several_items(self):
         """
         метод для добавления в корзину нескольких товаров

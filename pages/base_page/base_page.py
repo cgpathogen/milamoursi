@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -57,28 +58,36 @@ class BasePage:
 
     # actions
 
+    @allure.step("Accept cookie")
     def click_accept_cookie(self):
         self.get_accept_cookie_button().click()
 
+    @allure.step("Click search input button")
     def click_search_input_button(self):
         self.get_search_input_button().click()
 
+    @allure.step("Enter text")
     def enter_text(self, text):
         self.get_input_field().send_keys(f"{text}")
         self.get_input_field().send_keys(Keys.ENTER)
 
+    @allure.step("Click personal account button")
     def click_personal_account_btn(self):
         self.get_personal_account_button().click()
 
+    @allure.step("Click favorites button")
     def click_favorites_btn(self):
         self.get_favorites_button().click()
 
+    @allure.step("Click cart button")
     def click_cart_button(self):
         self.get_cart_button().click()
 
+    @allure.step("Click off canvas menu button")
     def click_close_off_canvas_button(self):
         self.get_close_off_canvas().click()
 
+    @allure.step("Click off-canvas menu go to cart button")
     def click_off_canvas_go_to_cart(self):
         self.get_off_canvas_go_to_cart_locator().click()
 
@@ -95,7 +104,7 @@ class BasePage:
             return ("xpath", f"{xpath}[{index}]{option}")
         return ("xpath", xpath)
 
-
+    @allure.step("scrolling page")
     def scroll(self,up, down):
         self.driver.execute_script(f"window.scrollBy({up}, {down});")
 
@@ -117,4 +126,5 @@ class BasePage:
         """
         переход на URL страницы
         """
-        self.driver.get(self.page_url)
+        with allure.step(f"Open page {self.page_url}"):
+            self.driver.get(self.page_url)

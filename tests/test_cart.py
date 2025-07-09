@@ -1,8 +1,11 @@
-import time
+import allure
 from base.base_test import BaseTest
 
+@allure.epic("Products")
+@allure.story("Cart")
 class TestCart(BaseTest):
 
+    @allure.title("Add items to cart/Remove items from cart")
     def test_add_remove_several_products(self):
         self.mainPage.open()
         self.mainPage.click_accept_cookie()
