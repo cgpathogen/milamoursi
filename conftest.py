@@ -1,8 +1,11 @@
+import os
 import pytest
+import sqlite3
+import tempfile
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import os
 from database.database import Database
+
 
 @pytest.fixture(autouse=True)
 def driver(request):
@@ -16,6 +19,18 @@ def driver(request):
 
 @pytest.fixture(autouse=True)
 def create_database():
-    if os.path.exists(Database.db_path):
-        os.remove(Database.db_path)
+    original_path = Database.db_path
+
+    temp_db = tempfile.NamedTemporaryFile(delete=False, suffix='.db')
+    temp_db.close()
+    Database.db_path = temp_db.name
     Database.create_db()
+    yield
+
+    try:
+        conn = sqlite3.connect(Database.db_path)
+        conn.close()
+        os.unlink(Database.db_path)
+    except Exception as e:
+        print(f"Error cleaning up temp db: {e}")
+    Database.db_path = original_path

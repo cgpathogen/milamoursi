@@ -5,3 +5,4 @@ from selenium.webdriver.support.wait import WebDriverWait
 class MainPage(BasePage):
 
     page_url ="https://milamoursi.ru/"
+
