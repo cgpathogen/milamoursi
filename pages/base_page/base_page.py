@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver import Keys
+from selenium.common.exceptions import StaleElementReferenceException
 
 class BasePage:
 
@@ -81,7 +82,10 @@ class BasePage:
 
     @allure.step("Click cart button")
     def click_cart_button(self):
-        self.get_cart_button().click()
+        try:
+            self.get_cart_button().click()
+        except StaleElementReferenceException:
+            self.get_cart_button().click()
 
     @allure.step("Click off canvas menu button")
     def click_close_off_canvas_button(self):

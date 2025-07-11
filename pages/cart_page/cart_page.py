@@ -17,6 +17,7 @@ class CartPage(BasePage):
     cross_button_locator = "(//a[@class='d-block'])" # кнопка-крести удаления из корзины
     empty = "//p[@class='fs-18 lh-155 mx-auto']" # сообщение "Корзина пуста"
     item_counter_locator = "//*[@id='basket_form']/div[1]/table/tbody/tr" # счётчик единиц товара, общий локатор
+    go_to_cart_locator = "//*[@id='basket_form']/div[2]/div[3]/div/div[2]/button"
 
     # getters
 
@@ -26,11 +27,18 @@ class CartPage(BasePage):
     def get_empty(self):
         return self.wait.until(EC.presence_of_element_located(self.locator_maker(self.empty)))
 
+    def get_go_to_cart(self):
+        return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.go_to_cart_locator)))
+
     # actions
 
     @allure.step("Waiting for message the cart is empty")
     def wait_for_message(self):
         assert self.get_empty().text == "Ваша корзина пуста"
+
+    @allure.step("Click go to cart button on cart page")
+    def click_go_to_cart_button(self):
+        self.get_go_to_cart().click()
 
     # methods
 
