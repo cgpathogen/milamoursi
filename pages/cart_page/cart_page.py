@@ -1,7 +1,8 @@
+import allure
 from database.database import Database
 from pages.base_page.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
-import allure
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from count import count
 
 class CartPage(BasePage):
@@ -46,8 +47,15 @@ class CartPage(BasePage):
     def remove_from_cart_(self):
         for i in range(1, count):
             # внутренний геттер для перебора кнопок по индексу
-            getter_cross_button = self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.cross_button_locator,i)))
-            getter_cross_button.click()
+            try:
+                getter_cross_button = self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.cross_button_locator,i)))
+                getter_cross_button.click()
+            except StaleElementReferenceException:
+                getter_cross_button = self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.cross_button_locator,i)))
+                getter_cross_button.click()
+            except TimeoutException:
+                getter_cross_button = self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.cross_button_locator,i)))
+                getter_cross_button.click()
         self.wait_for_message() # завершение теста через ожидание сообщения "Корзина пуста"
 
 

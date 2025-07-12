@@ -52,7 +52,10 @@ class BasePage:
         return self.wait.until(EC.visibility_of_element_located(self.locator_maker(self.off_canvas_block)))
 
     def get_close_off_canvas(self):
-        return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.close_off_canvas)))
+        try:
+            return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.close_off_canvas)))
+        except StaleElementReferenceException:
+            return self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.close_off_canvas)))
 
     def get_off_canvas_go_to_cart_locator(self):
         return  self.wait.until(EC.element_to_be_clickable(self.locator_maker(self.off_canvas_go_to_cart_locator)))
@@ -89,7 +92,10 @@ class BasePage:
 
     @allure.step("Click off canvas menu button")
     def click_close_off_canvas_button(self):
-        self.get_close_off_canvas().click()
+        try:
+            self.get_close_off_canvas().click()
+        except StaleElementReferenceException:
+            self.get_close_off_canvas().click()
 
     @allure.step("Click off-canvas menu go to cart button")
     def click_off_canvas_go_to_cart(self):

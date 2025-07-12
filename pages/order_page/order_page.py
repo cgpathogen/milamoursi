@@ -94,6 +94,8 @@ class OrderPage(BasePage):
             self.get_close_popup_locator().click()
         except StaleElementReferenceException:
             self.get_close_popup_locator().click()
+        except TimeoutException:
+            self.get_close_popup_locator().click()
 
     @allure.step("Enter username")
     def enter_username(self, username):
