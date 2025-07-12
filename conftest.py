@@ -11,7 +11,9 @@ from database.database import Database
 def driver(request):
     options = Options()
     options.add_argument("--window-size=1920,1080")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
     driver = webdriver.Chrome(options=options)
+    driver.set_window_position(0, 0)
     request.cls.driver = driver
     yield
     driver.quit()
