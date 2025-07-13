@@ -3,6 +3,7 @@ from pages.search_results_page.search_result_page import SearchResultPage
 from pages.cart_page.cart_page import CartPage
 from pages.order_page.order_page import OrderPage
 from pages.personal_page.personal_page import PersonalCabinetPage
+from pages.catalogue_page.catalogue_page import CataloguePage
 
 from data.credentials.credentials import Credentials
 
@@ -14,4 +15,5 @@ class BaseTest:
         self.cartPage = CartPage(self.driver)
         self.orderPage = OrderPage(self.driver)
         self.personalPage = PersonalCabinetPage(self.driver)
+        self.cataloguePage = CataloguePage(self.driver)
         self.credentials = Credentials()

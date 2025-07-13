@@ -25,7 +25,7 @@ class TestOrders(BaseTest):
 
     @allure.title("Place order with paying by card via catalogue")
     @allure.feature("Paying")
-    def test_order_with_paying_by_card(self):
+    def test_order_with_paying_in_cash(self):
         self.mainPage.open()
         self.mainPage.click_accept_cookie()
         self.mainPage.hover_for_face_link()
