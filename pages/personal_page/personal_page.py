@@ -20,6 +20,12 @@ class PersonalCabinetPage(BasePage):
     login_button_locator = "(//button[@class='bxmaker-authuserphone-button'])[2]"
     user_not_found_locator = "//*[@id='bxmaker-authuserphone-enter__uB8qD7']/div[1]/div[3]/div[1]"
 
+    # texts
+
+    user_not_found_alert = "Такой пользователь не найден"
+    no_login_entered_alert = "Не указан телефон, логин или email"
+    no_password_entered_alert = "Не указан пароль"
+
     # getters
 
     def get_login_input(self):
