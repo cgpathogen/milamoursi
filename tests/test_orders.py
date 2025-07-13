@@ -21,3 +21,13 @@ class TestOrders(BaseTest):
         self.orderPage.choose_city()
         self.orderPage.enter_user_data()
         self.orderPage.compare_prices_and_names()
+
+
+    @allure.title("Place order with paying by card via catalogue")
+    @allure.feature("Paying")
+    def test_order_with_paying_by_card(self):
+        self.mainPage.open()
+        self.mainPage.click_accept_cookie()
+        self.mainPage.hover_for_face_link()
+        self.mainPage.hover_dropdown_menu()
+        self.mainPage.click_day_care_link()
