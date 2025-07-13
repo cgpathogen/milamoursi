@@ -5,10 +5,13 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver import Keys
 from selenium.common.exceptions import StaleElementReferenceException
+from pages.base_page.components.nav_links import NavLinks
 
 class BasePage:
 
     def __init__(self, driver):
+        super().__init__(driver)
+        self.nav_links = NavLinks(driver)
         self.driver : WebDriver = driver
         self.wait = WebDriverWait(driver,10,1)
         self.action = ActionChains(driver)
